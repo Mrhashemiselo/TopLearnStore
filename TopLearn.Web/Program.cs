@@ -1,4 +1,6 @@
 using Microsoft.EntityFrameworkCore;
+using TopLearn.Core.Services.Implement;
+using TopLearn.Core.Services.Interfaces;
 using TopLearn.DataLayer.Context;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -10,6 +12,10 @@ builder.Services.AddMvc();
 #region DataBaseContext
 builder.Services.AddDbContext<TopLearnContext>(option =>
 option.UseSqlServer(builder.Configuration.GetConnectionString("TopLearnSql")));
+#endregion
+
+#region IoC
+builder.Services.AddTransient<IUserService, UserService>();
 #endregion
 
 var app = builder.Build();
