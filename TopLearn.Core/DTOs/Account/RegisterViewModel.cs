@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace TopLearn.Core.DTOs;
+namespace TopLearn.Core.DTOs.Account;
 public class RegisterViewModel
 {
     [Display(Name = "نام کاربری")]

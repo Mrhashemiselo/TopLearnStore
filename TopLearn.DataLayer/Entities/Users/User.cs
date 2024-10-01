@@ -13,30 +13,30 @@ public class User
 
     [Display(Name = "نام کاربری")]
     [Required(ErrorMessage = "لطفا {0} را وارد کنید")]
-    [MaxLength(100, ErrorMessage = "{0} نباید از {1} بزرگتر باشد")]
-    [MinLength(4, ErrorMessage = "{0} نباید از {1} کوچکتر باشد")]
+    [MaxLength(100, ErrorMessage = "تعداد حروف {0} نباید از {1} بزرگتر باشد")]
+    [MinLength(4, ErrorMessage = "تعداد حروف {0} نباید از {1} کوچکتر باشد")]
     public string UserName { get; set; }
 
     [Display(Name = "پست الکترونیک")]
     [Required(ErrorMessage = "لطفا {0} را وارد کنید")]
     [EmailAddress(ErrorMessage = "ایمیل وارد شده معتبر نمی باشد")]
-    [MaxLength(150, ErrorMessage = "{0} نباید از {1} بزرگتر باشد")]
+    [MaxLength(150, ErrorMessage = "تعداد حروف {0} نباید از {1} بزرگتر باشد")]
     public string Email { get; set; }
 
     [Display(Name = "کلمه عبور")]
     [Required(ErrorMessage = "لطفا {0} را وارد کنید")]
-    [MinLength(8, ErrorMessage = "{0} نباید از {1} کوچکتر باشد")]
+    [MinLength(8, ErrorMessage = "تعداد حروف {0} نباید از {1} کوچکتر باشد")]
     public string Password { get; set; }
 
     [Display(Name = "کد فعال سازی")]
-    [MaxLength(50, ErrorMessage = "{0} نباید از {1} بزرگتر باشد")]
+    [MaxLength(50, ErrorMessage = "تعداد حروف {0} نباید از {1} بزرگتر باشد")]
     public string ActiveCode { get; set; }
 
     [Display(Name = "وضعیت")]
     public bool IsActive { get; set; }
 
     [Display(Name = "آواتار")]
-    [MaxLength(150, ErrorMessage = "{0} نباید از {1} بزرگتر باشد")]
+    [MaxLength(150)] //for database
     public string Avatar { get; set; }
 
     [Display(Name = "تاریخ ثبت نام")]
