@@ -28,17 +28,43 @@ public class UserService(TopLearnContext context) : IUserService
         return user.Id;
     }
 
+    public User GetUserByActiveCode(string activeCode)
+    {
+        return context.Users.SingleOrDefault(a => a.ActiveCode == activeCode);
+    }
+
+    public User GetUserByEmail(string email)
+    {
+        return context.Users.SingleOrDefault(a => a.Email == email);
+    }
+
+    public User GetUserByUsername(string username)
+    {
+        return context.Users.SingleOrDefault(a => a.Username == username);
+    }
+
     public bool IsExistEmail(string email) =>
         context.Users.Any(u => u.Email == email);
 
-    public bool IsExistUserName(string userName) =>
-        context.Users.Any(s => s.UserName == userName);
+    public bool IsExistUsername(string userName) =>
+        context.Users.Any(s => s.Username == userName);
 
     public User LoginUser(LoginViewModel login)
     {
-        string hashPassword = PasswordHelper.EncodingPassword(login.Password);
         string email = FixedText.FixedEmail(login.Email);
-        return context.Users
-            .SingleOrDefault(a => a.Email == email && a.Password == hashPassword);
+        var user = context.Users
+            .SingleOrDefault(a => a.Email == email);
+        if (user != null)
+        {
+            if (PasswordHelper.VerifyPassword(login.Password, user.Password))
+                return user;
+        }
+        return null;
+    }
+
+    public void UpdateUser(User user)
+    {
+        context.Users.Update(user);
+        context.SaveChanges();
     }
 }

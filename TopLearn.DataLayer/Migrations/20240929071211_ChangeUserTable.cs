@@ -11,7 +11,7 @@ namespace TopLearn.DataLayer.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.AlterColumn<string>(
-                name: "UserName",
+                name: "Username",
                 table: "Users",
                 type: "nvarchar(100)",
                 maxLength: 100,
@@ -51,7 +51,7 @@ namespace TopLearn.DataLayer.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.AlterColumn<string>(
-                name: "UserName",
+                name: "Username",
                 table: "Users",
                 type: "nvarchar(max)",
                 nullable: false,

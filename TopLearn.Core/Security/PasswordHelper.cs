@@ -23,4 +23,24 @@ public class PasswordHelper
         // Combine salt and hashed password for storage
         return Convert.ToBase64String(salt) + ":" + hashed;
     }
+
+    public static bool VerifyPassword(string inputPassword, string storedHash)
+    {
+        // Split the stored hash into salt and hash
+        var parts = storedHash.Split(':');
+        var salt = Convert.FromBase64String(parts[0]);
+        var hash = parts[1];
+
+        // Hash the input password with the same salt
+        string inputHash = Convert.ToBase64String(KeyDerivation.Pbkdf2(
+            password: inputPassword,
+            salt: salt,
+            prf: KeyDerivationPrf.HMACSHA256,
+            iterationCount: 10000,
+            numBytesRequested: 32));
+
+        // Compare the hashes
+        return inputHash == hash;
+    }
+
 }

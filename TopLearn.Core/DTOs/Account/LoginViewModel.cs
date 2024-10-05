@@ -3,7 +3,7 @@
 namespace TopLearn.Core.DTOs.Account;
 public class LoginViewModel
 {
-    [Display(Name = "پست الکترونیک")]
+    [Display(Name = "ایمیل")]
     [Required(ErrorMessage = "لطفا {0} را وارد کنید")]
     [EmailAddress(ErrorMessage = "ایمیل وارد شده معتبر نمی باشد")]
     public string Email { get; set; }

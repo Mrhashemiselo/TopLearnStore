@@ -1,19 +1,9 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
 namespace TopLearn.Core.DTOs.Account;
-public class RegisterViewModel
+public class ResetPasswordViewModel
 {
-    [Display(Name = "نام کاربری")]
-    [Required(ErrorMessage = "لطفا {0} را وارد کنید")]
-    [MaxLength(100, ErrorMessage = "{0} نباید از {1} بزرگتر باشد")]
-    [MinLength(4, ErrorMessage = "{0} نباید از {1} کوچکتر باشد")]
-    public string Username { get; set; }
-
-    [Display(Name = "ایمیل")]
-    [Required(ErrorMessage = "لطفا {0} را وارد کنید")]
-    [EmailAddress(ErrorMessage = "ایمیل وارد شده معتبر نمی باشد")]
-    [MaxLength(150, ErrorMessage = "{0} نباید از {1} بزرگتر باشد")]
-    public string Email { get; set; }
+    public string ActiveCode { get; set; }
 
     [Display(Name = "کلمه عبور")]
     [Required(ErrorMessage = "لطفا {0} را وارد کنید")]

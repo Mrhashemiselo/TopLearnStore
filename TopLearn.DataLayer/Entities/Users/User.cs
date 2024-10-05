@@ -15,7 +15,7 @@ public class User
     [Required(ErrorMessage = "لطفا {0} را وارد کنید")]
     [MaxLength(100, ErrorMessage = "تعداد حروف {0} نباید از {1} بزرگتر باشد")]
     [MinLength(4, ErrorMessage = "تعداد حروف {0} نباید از {1} کوچکتر باشد")]
-    public string UserName { get; set; }
+    public string Username { get; set; }
 
     [Display(Name = "پست الکترونیک")]
     [Required(ErrorMessage = "لطفا {0} را وارد کنید")]
