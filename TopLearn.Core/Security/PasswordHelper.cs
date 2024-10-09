@@ -24,7 +24,7 @@ public class PasswordHelper
         return Convert.ToBase64String(salt) + ":" + hashed;
     }
 
-    public static bool VerifyPassword(string inputPassword, string storedHash)
+    public static bool ComparePassword(string inputPassword, string storedHash)
     {
         // Split the stored hash into salt and hash
         var parts = storedHash.Split(':');

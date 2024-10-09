@@ -41,7 +41,7 @@ public class AccountController(IUserService userService,
 
         DataLayer.Entities.Users.User user = new()
         {
-            ActiveCode = GuidGenerator.GenerateActiveCode(),
+            ActiveCode = GuidGenerator.GenerateUniqId(),
             Avatar = "DefaultAvatar.jpg",
             IsActive = false,
             Password = PasswordHelper.EncodingPassword(model.Password),
@@ -63,8 +63,9 @@ public class AccountController(IUserService userService,
 
     #region Login
     [Route("Login")]
-    public IActionResult Login()
+    public IActionResult Login(bool EditProfile = false)
     {
+        ViewBag.EditProfile = EditProfile;
         return View();
     }
 

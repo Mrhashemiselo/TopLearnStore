@@ -16,7 +16,7 @@ public class UserService(TopLearnContext context) : IUserService
             return false;
 
         user.IsActive = true;
-        user.ActiveCode = GuidGenerator.GenerateActiveCode();
+        user.ActiveCode = GuidGenerator.GenerateUniqId();
         context.SaveChanges();
         return true;
     }
@@ -56,7 +56,7 @@ public class UserService(TopLearnContext context) : IUserService
             .SingleOrDefault(a => a.Email == email);
         if (user != null)
         {
-            if (PasswordHelper.VerifyPassword(login.Password, user.Password))
+            if (PasswordHelper.ComparePassword(login.Password, user.Password))
                 return user;
         }
         return null;
