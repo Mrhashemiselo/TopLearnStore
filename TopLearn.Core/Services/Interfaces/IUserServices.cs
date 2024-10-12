@@ -2,7 +2,7 @@
 using TopLearn.DataLayer.Entities.Users;
 
 namespace TopLearn.Core.Services.Interfaces;
-public interface IUserService
+public interface IUserServices
 {
     bool IsExistUsername(string userName);
     bool IsExistEmail(string email);
@@ -13,4 +13,5 @@ public interface IUserService
     User GetUserByActiveCode(string activeCode);
     void UpdateUser(User user);
     User GetUserByUsername(string username);
+    int GetUserIdByUsername(string username);
 }

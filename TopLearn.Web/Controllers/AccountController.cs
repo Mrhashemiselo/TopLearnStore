@@ -10,7 +10,7 @@ using TopLearn.Core.Senders;
 using TopLearn.Core.Services.Interfaces;
 
 namespace TopLearn.Web.Controllers;
-public class AccountController(IUserService userService,
+public class AccountController(IUserServices userService,
     IViewRenderService viewRenderService) : Controller
 {
     #region Register

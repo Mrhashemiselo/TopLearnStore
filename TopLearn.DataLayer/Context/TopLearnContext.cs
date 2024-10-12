@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using TopLearn.DataLayer.Entities.Users;
+using TopLearn.DataLayer.Entities.Wallet;
 
 namespace TopLearn.DataLayer.Context;
 public class TopLearnContext : DbContext
@@ -13,4 +14,15 @@ public class TopLearnContext : DbContext
     public DbSet<User> Users { get; set; }
     public DbSet<UserRole> UserRoles { get; set; }
     #endregion
+
+    #region Wallet
+    public DbSet<WalletType> WalletTypes { get; set; }
+    public DbSet<Wallet> Wallets { get; set; }
+    #endregion
+
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
+    {
+        base.OnModelCreating(modelBuilder);
+        modelBuilder.Seed();
+    }
 }

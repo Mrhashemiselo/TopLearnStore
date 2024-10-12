@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using TopLearn.DataLayer.Context;
 
@@ -11,9 +12,11 @@ using TopLearn.DataLayer.Context;
 namespace TopLearn.DataLayer.Migrations
 {
     [DbContext(typeof(TopLearnContext))]
-    partial class TopLearnContextModelSnapshot : ModelSnapshot
+    [Migration("20241012064309_WalletTableWasAdded")]
+    partial class WalletTableWasAdded
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -127,6 +130,9 @@ namespace TopLearn.DataLayer.Migrations
                     b.Property<bool>("IsPay")
                         .HasColumnType("bit");
 
+                    b.Property<int>("TypeId")
+                        .HasColumnType("int");
+
                     b.Property<int>("UserId")
                         .HasColumnType("int");
 
@@ -140,38 +146,6 @@ namespace TopLearn.DataLayer.Migrations
                     b.HasIndex("WalletTypeId");
 
                     b.ToTable("Wallets");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            Amount = 2000000,
-                            CreateDate = new DateTime(2024, 10, 12, 11, 11, 15, 283, DateTimeKind.Local).AddTicks(8009),
-                            Description = "شارژ حساب",
-                            IsPay = true,
-                            UserId = 12,
-                            WalletTypeId = 1
-                        },
-                        new
-                        {
-                            Id = 2,
-                            Amount = 500000,
-                            CreateDate = new DateTime(2024, 10, 12, 11, 11, 15, 283, DateTimeKind.Local).AddTicks(8020),
-                            Description = "شارژ حساب",
-                            IsPay = true,
-                            UserId = 12,
-                            WalletTypeId = 1
-                        },
-                        new
-                        {
-                            Id = 3,
-                            Amount = 650000,
-                            CreateDate = new DateTime(2024, 10, 12, 11, 11, 15, 283, DateTimeKind.Local).AddTicks(8022),
-                            Description = "خرید دوره",
-                            IsPay = true,
-                            UserId = 12,
-                            WalletTypeId = 2
-                        });
                 });
 
             modelBuilder.Entity("TopLearn.DataLayer.Entities.Wallet.WalletType", b =>
@@ -187,18 +161,6 @@ namespace TopLearn.DataLayer.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("WalletTypes");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            Title = "واریز"
-                        },
-                        new
-                        {
-                            Id = 2,
-                            Title = "برداشت"
-                        });
                 });
 
             modelBuilder.Entity("TopLearn.DataLayer.Entities.Users.UserRole", b =>

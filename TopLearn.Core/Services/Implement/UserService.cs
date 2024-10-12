@@ -7,7 +7,7 @@ using TopLearn.DataLayer.Context;
 using TopLearn.DataLayer.Entities.Users;
 
 namespace TopLearn.Core.Services.Implement;
-public class UserService(TopLearnContext context) : IUserService
+public class UserService(TopLearnContext context) : IUserServices
 {
     public bool ActiveAccount(string activeCode)
     {
@@ -41,6 +41,11 @@ public class UserService(TopLearnContext context) : IUserService
     public User GetUserByUsername(string username)
     {
         return context.Users.SingleOrDefault(a => a.Username == username);
+    }
+
+    public int GetUserIdByUsername(string username)
+    {
+        return context.Users.SingleOrDefault(a => a.Username == username).Id;
     }
 
     public bool IsExistEmail(string email) =>

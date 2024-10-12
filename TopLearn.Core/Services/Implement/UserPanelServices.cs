@@ -5,8 +5,9 @@ using TopLearn.Core.Services.Interfaces;
 using TopLearn.DataLayer.Context;
 
 namespace TopLearn.Core.Services.Implement;
-public class UserPanelServices(IUserService userService,
-    TopLearnContext context) : IUserPanelServices
+public class UserPanelServices(IUserServices userService,
+    TopLearnContext context,
+    IWalletServices walletServices) : IUserPanelServices
 {
     public bool CompareOldPassword(string username, string oldPassword)
     {
@@ -75,7 +76,7 @@ public class UserPanelServices(IUserService userService,
         information.Username = user.Username;
         information.Email = user.Email;
         information.RegisterDate = user.RegisterDate;
-        information.Wallet = 0;
+        information.Wallet = walletServices.BalanceUserWallet(username);
 
         return information;
     }
