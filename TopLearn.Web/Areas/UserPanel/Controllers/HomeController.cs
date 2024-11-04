@@ -61,6 +61,4 @@ public class HomeController(IUserPanelServices userPanelServices) : Controller
         return View();
     }
     #endregion
-
-
 }

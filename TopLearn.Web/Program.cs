@@ -1,5 +1,10 @@
-using Microsoft.AspNetCore.Authentication.Cookies;
+﻿using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.EntityFrameworkCore;
+using Parbad.Builder;
+using Parbad.Gateway.Mellat;
+using Parbad.Gateway.Melli;
+using Parbad.Gateway.ParbadVirtual;
+using Parbad.Gateway.ZarinPal;
 using TopLearn.Core.Convertors;
 using TopLearn.Core.Services.Implement;
 using TopLearn.Core.Services.Interfaces;
@@ -7,9 +12,29 @@ using TopLearn.DataLayer.Context;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
 builder.Services.AddControllersWithViews();
 builder.Services.AddMvc();
+
+builder.Services.AddParbad()
+    .ConfigureGateways(gateways =>
+    {
+        gateways
+       .AddZarinPal()
+       .WithAccounts(accounts =>
+       {
+           accounts.AddInMemory(account =>
+           {
+               account.MerchantId = "e739ea87-0e82-4a64-93b9-2a9443f3b6e2";
+               account.IsSandbox = true;
+           });
+       });
+
+        gateways
+       .AddParbadVirtual()
+       .WithOptions(options => options.GatewayPath = "/MyVirtualGateway");
+    })
+   .ConfigureHttpContext(httpContextBuilder => httpContextBuilder.UseDefaultAspNetCore())
+   .ConfigureStorage(storageBuilder => storageBuilder.UseMemoryCache());
 
 #region AddAuthentication
 builder.Services.AddAuthentication(options =>
@@ -63,5 +88,7 @@ app.MapControllerRoute(
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
+
+app.UseParbadVirtualGateway();
 
 app.Run();

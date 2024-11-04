@@ -1,33 +1,75 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using TopLearn.Core.DTOs.Wallet;
+using Parbad;
+using Parbad.AspNetCore;
+using Parbad.Gateway.ZarinPal;
 using TopLearn.Core.Services.Interfaces;
+using TopLearn.Web.Parbad.ViewModels;
 
 namespace TopLearn.Web.Areas.UserPanel.Controllers;
 [Area("UserPanel")]
 [Authorize]
-public class WalletController(IWalletServices walletServices) : Controller
+public class WalletController : Controller
 {
+    private readonly IWalletServices _walletServices;
+    private readonly IUserServices _userServices;
+
+    private readonly IOnlinePayment _onlinePayment;
+
+    public WalletController(IWalletServices walletServices,
+        IUserServices userServices,
+        IOnlinePayment onlinePayment)
+    {
+        _walletServices = walletServices;
+        _userServices = userServices;
+        _onlinePayment = onlinePayment;
+    }
+
+
     [Route("UserPanel/Wallet")]
     public IActionResult Index()
     {
-        ViewBag.ListWallet = walletServices.GetWalletUser(User.Identity.Name);
+        ViewBag.ListWallet = _walletServices.GetWalletUser(User.Identity.Name);
         return View();
     }
 
     [Route("UserPanel/Wallet")]
     [HttpPost]
-    public IActionResult Index(ChargeWalletViewModel model)
+    public async Task<IActionResult> Index(PayViewModel model)
     {
         if (!ModelState.IsValid)
         {
-            ViewBag.ListWallet = walletServices.GetWalletUser(User.Identity.Name);
+            ViewBag.ListWallet = _walletServices.GetWalletUser(User.Identity.Name);
             return View();
         }
 
-        walletServices.ChargeWallet(User.Identity.Name, model.Amount, "شارژ حساب");
+        var walletId = _walletServices.ChargeWallet(User.Identity.Name, (int)model.Amount, "شارژ حساب");
 
-        //TODO: online payment
-        return null;
+        #region Parpad payment
+        var callbackUrl = $"https://localhost:7207/onlinePayment/{walletId}";
+        var result = await _onlinePayment.RequestAsync(invoice =>
+        {
+            invoice.SetZarinPalData("Description")
+                   .SetCallbackUrl(callbackUrl)
+                   .SetAmount(model.Amount)
+                   .SetGateway(model.SelectedGateway.ToString());
+
+            if (model.GenerateTrackingNumberAutomatically)
+            {
+                invoice.UseAutoIncrementTrackingNumber();
+            }
+            else
+            {
+                invoice.SetTrackingNumber(model.TrackingNumber);
+            }
+        });
+
+        if (result.IsSucceed)
+        {
+            return result.GatewayTransporter.TransportToGateway();
+        }
+        #endregion
+
+        return View("PayRequestError", result);
     }
 }

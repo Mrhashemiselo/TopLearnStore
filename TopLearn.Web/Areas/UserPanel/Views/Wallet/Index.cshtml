@@ -1,6 +1,7 @@
-﻿@using TopLearn.Core.Convertors;
+﻿
+@using TopLearn.Core.Convertors;
 @using TopLearn.Core.DTOs.Wallet
-@model TopLearn.Core.DTOs.Wallet.ChargeWalletViewModel
+@model TopLearn.Web.Parbad.ViewModels.PayViewModel
 @{
     ViewData["Title"] = "کیف پول شما";
 }
@@ -29,6 +30,9 @@
                                         <div class="input-group">
                                             <span class="input-group-addon" id="username"><i class="zmdi zmdi-balance-wallet"></i></span>
                                             <input type="number" class="form-control" asp-for="Amount" placeholder="مبلغ به تومان">
+                                        </div>
+                                        <div class="input-group">
+                                            <input type="hidden" asp-for="SelectedGateway" value="ParbadVirtual" />
                                         </div>
                                     </div>
 

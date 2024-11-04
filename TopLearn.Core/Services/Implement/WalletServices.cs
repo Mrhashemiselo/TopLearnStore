@@ -5,12 +5,13 @@ using TopLearn.DataLayer.Entities.Wallet;
 
 namespace TopLearn.Core.Services.Implement;
 public class WalletServices(IUserServices userServices,
-    TopLearnContext context) : IWalletServices
+                            TopLearnContext context) : IWalletServices
 {
-    public void AddWallet(Wallet wallet)
+    public int AddWallet(Wallet wallet)
     {
         context.Wallets.Add(wallet);
         context.SaveChanges();
+        return wallet.Id;
     }
 
     public int BalanceUserWallet(string username)
@@ -30,7 +31,7 @@ public class WalletServices(IUserServices userServices,
         return (deposit.Sum() - withdrawal.Sum());
     }
 
-    public void ChargeWallet(string username, int amount, string description, bool isPay = false)
+    public int ChargeWallet(string username, int amount, string description, bool isPay = false)
     {
         Wallet wallet = new()
         {
@@ -41,7 +42,12 @@ public class WalletServices(IUserServices userServices,
             WalletTypeId = 1,
             UserId = userServices.GetUserIdByUsername(username)
         };
-        AddWallet(wallet);
+        return AddWallet(wallet);
+    }
+
+    public Wallet GetWalletByWalletId(int walletId)
+    {
+        return context.Wallets.Find(walletId);
     }
 
     public List<WalletViewModel> GetWalletUser(string username)
@@ -56,5 +62,11 @@ public class WalletServices(IUserServices userServices,
                 Description = a.Description,
                 DateAndTime = a.CreateDate
             }).ToList();
+    }
+
+    public void UpdateWallet(Wallet wallet)
+    {
+        context.Wallets.Update(wallet);
+        context.SaveChanges();
     }
 }

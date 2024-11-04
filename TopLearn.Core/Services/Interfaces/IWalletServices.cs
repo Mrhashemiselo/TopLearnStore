@@ -6,6 +6,8 @@ public interface IWalletServices
 {
     int BalanceUserWallet(string username);
     List<WalletViewModel> GetWalletUser(string username);
-    void ChargeWallet(string username, int amount, string description, bool isPay = false);
-    void AddWallet(Wallet wallet);
+    int ChargeWallet(string username, int amount, string description, bool isPay = false);
+    int AddWallet(Wallet wallet);
+    Wallet GetWalletByWalletId(int walletId);
+    void UpdateWallet(Wallet wallet);
 }
