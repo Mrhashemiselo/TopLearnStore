@@ -50,7 +50,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Pages\Shared\" />
     <Folder Include="wwwroot\CourseFilesOnline\" />
     <Folder Include="wwwroot\courseFiles\" />
     <Folder Include="wwwroot\courseOnline\" />

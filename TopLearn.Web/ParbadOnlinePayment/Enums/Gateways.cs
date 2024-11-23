@@ -1,4 +1,4 @@
-﻿namespace TopLearn.Web.Parbad.Enums;
+﻿namespace TopLearn.Web.ParbadOnlinePayment.Enums;
 
 public enum Gateways
 {

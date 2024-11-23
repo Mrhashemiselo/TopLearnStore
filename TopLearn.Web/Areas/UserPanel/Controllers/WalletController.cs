@@ -4,7 +4,7 @@ using Parbad;
 using Parbad.AspNetCore;
 using Parbad.Gateway.ZarinPal;
 using TopLearn.Core.Services.Interfaces;
-using TopLearn.Web.Parbad.ViewModels;
+using TopLearn.Web.ParbadOnlinePayment.ViewModels;
 
 namespace TopLearn.Web.Areas.UserPanel.Controllers;
 [Area("UserPanel")]

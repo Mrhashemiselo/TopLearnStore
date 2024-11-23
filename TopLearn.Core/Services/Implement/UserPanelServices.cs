@@ -29,7 +29,7 @@ public class UserPanelServices(IUserServices userService,
                 }
 
             }
-            model.AvatarName = GuidGenerator.GenerateUniqId() + Path.GetExtension(model.UserAvatar.FileName);
+            model.AvatarName = GuidGenerator.GenerateUniqueId() + Path.GetExtension(model.UserAvatar.FileName);
             imagePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/UserAvatar", model.AvatarName);
             using (var stream = new FileStream(imagePath, FileMode.Create))
             {

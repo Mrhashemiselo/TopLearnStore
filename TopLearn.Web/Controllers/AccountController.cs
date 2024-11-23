@@ -41,7 +41,7 @@ public class AccountController(IUserServices userService,
 
         DataLayer.Entities.Users.User user = new()
         {
-            ActiveCode = GuidGenerator.GenerateUniqId(),
+            ActiveCode = GuidGenerator.GenerateUniqueId(),
             Avatar = "DefaultAvatar.jpg",
             IsActive = false,
             Password = PasswordHelper.EncodingPassword(model.Password),

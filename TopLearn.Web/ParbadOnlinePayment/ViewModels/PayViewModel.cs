@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using TopLearn.Web.Parbad.Enums;
+using TopLearn.Web.ParbadOnlinePayment.Enums;
 
-namespace TopLearn.Web.Parbad.ViewModels;
+namespace TopLearn.Web.ParbadOnlinePayment.ViewModels;
 
 public class PayViewModel
 {

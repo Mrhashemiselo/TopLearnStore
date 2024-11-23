@@ -3,7 +3,7 @@
 namespace TopLearn.Core.Security;
 public class PasswordHelper
 {
-    public static string EncodingPassword(string password) //Encrypt using MD5
+    public static string EncodingPassword(string password)
     {
         // Generate a random salt
         byte[] salt = new byte[16];

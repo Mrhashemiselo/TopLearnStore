@@ -60,6 +60,8 @@ builder.Services.AddScoped<IUserServices, UserService>();
 builder.Services.AddScoped<IWalletServices, WalletServices>();
 builder.Services.AddScoped<IUserPanelServices, UserPanelServices>();
 builder.Services.AddScoped<IViewRenderService, RenderViewToString>();
+builder.Services.AddScoped<IPermissionService, PermissionService>();
+builder.Services.AddScoped<IAdminPanel, AdminPanel>();
 #endregion
 
 var app = builder.Build();

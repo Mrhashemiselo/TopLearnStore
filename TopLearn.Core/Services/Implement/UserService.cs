@@ -16,7 +16,7 @@ public class UserService(TopLearnContext context) : IUserServices
             return false;
 
         user.IsActive = true;
-        user.ActiveCode = GuidGenerator.GenerateUniqId();
+        user.ActiveCode = GuidGenerator.GenerateUniqueId();
         context.SaveChanges();
         return true;
     }
