@@ -1,8 +1,10 @@
-﻿using TopLearn.Core.DTOs.Users;
+﻿using TopLearn.Core.DTOs.AdminPanel;
 
 namespace TopLearn.Core.Services.Interfaces;
 public interface IAdminPanel
 {
     UserForAdminViewModel GetUsers(int pageId = 1, string filterEmail = "", string filterUsername = "");
     int AddUserFromAdmin(CreateUserViewModel model);
+    EditUserViewModel GetUserForShowInEditMode(int userId);
+    void EditUserFromAdmin(EditUserViewModel editUserViewModel);
 }

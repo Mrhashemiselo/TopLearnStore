@@ -1,5 +1,6 @@
-﻿using TopLearn.Core.DTOs.Users;
+﻿using TopLearn.Core.DTOs.AdminPanel;
 using TopLearn.Core.Generator;
+using TopLearn.Core.Images;
 using TopLearn.Core.Security;
 using TopLearn.Core.Services.Interfaces;
 using TopLearn.DataLayer.Context;
@@ -11,27 +12,58 @@ public class AdminPanel(TopLearnContext context,
 {
     public int AddUserFromAdmin(CreateUserViewModel model)
     {
-        var user = new User();
-        user.Password = PasswordHelper.EncodingPassword(model.Password);
-        user.ActiveCode = GuidGenerator.GenerateUniqueId();
-        user.Email = model.Email;
-        user.IsActive = true;
-        user.RegisterDate = DateTime.Now;
-        user.Username = model.Username;
+        User user = new()
+        {
+            Password = PasswordHelper.EncodingPassword(model.Password),
+            ActiveCode = GuidGenerator.GenerateUniqueId(),
+            Email = model.Email,
+            IsActive = true,
+            RegisterDate = DateTime.Now,
+            Username = model.Username
+        };
 
         #region SaveAvatar
         if (model.UserAvatar != null)
         {
-            string imagePath = "";
-            user.Avatar = GuidGenerator.GenerateUniqueId() + Path.GetExtension(model.UserAvatar.FileName);
-            imagePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/UserAvatar", user.Avatar);
-            using (var stream = new FileStream(imagePath, FileMode.Create))
-            {
-                model.UserAvatar.CopyTo(stream);
-            }
+            user.Avatar = AvatarHelper.SaveAvatar(model.UserAvatar);
         }
         #endregion
         return userServices.AddUser(user);
+    }
+
+    public void EditUserFromAdmin(EditUserViewModel editUserViewModel)
+    {
+        var user = userServices.GetUserById(editUserViewModel.UserId);
+        user.Email = editUserViewModel.Email;
+        if (!string.IsNullOrEmpty(editUserViewModel.Password))
+        {
+            user.Password = PasswordHelper.EncodingPassword(editUserViewModel.Password);
+        }
+        if (editUserViewModel.UserAvatar != null)
+        {
+            if (editUserViewModel.AvatarName != "DefaultAvatar.jpg")
+            {
+                var deletePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/UserAvatar", editUserViewModel.AvatarName);
+                if (File.Exists(deletePath))
+                    File.Delete(deletePath);
+            }
+            user.Avatar = AvatarHelper.SaveAvatar(editUserViewModel.UserAvatar);
+        }
+        context.Users.Update(user);
+        context.SaveChanges();
+    }
+
+    public EditUserViewModel GetUserForShowInEditMode(int userId)
+    {
+        return context.Users.Where(u => u.Id == userId)
+            .Select(s => new EditUserViewModel()
+            {
+                UserId = s.Id,
+                AvatarName = s.Avatar,
+                Email = s.Email,
+                Username = s.Username,
+                UserRoles = s.UserRoles.Select(r => r.RoleId).ToList()
+            }).Single();
     }
 
     public UserForAdminViewModel GetUsers(int pageId = 1, string filterEmail = "", string filterUsername = "")

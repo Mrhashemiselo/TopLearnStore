@@ -38,6 +38,11 @@ public class UserService(TopLearnContext context) : IUserServices
         return context.Users.SingleOrDefault(a => a.Email == email);
     }
 
+    public User GetUserById(int userId)
+    {
+        return context.Users.Find(userId);
+    }
+
     public User GetUserByUsername(string username)
     {
         return context.Users.SingleOrDefault(a => a.Username == username);

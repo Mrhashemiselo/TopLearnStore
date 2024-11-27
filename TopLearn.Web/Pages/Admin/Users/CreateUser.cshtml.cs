@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using TopLearn.Core.DTOs.Users;
+using TopLearn.Core.DTOs.AdminPanel;
 using TopLearn.Core.Services.Interfaces;
 
 namespace TopLearn.Web.Pages.Admin.Users;
@@ -22,9 +22,7 @@ public class CreateUserModel(IAdminPanel adminPanel,
             return Page();
 
         int userId = adminPanel.AddUserFromAdmin(CreateUserViewModel);
-
         permissionService.AddRolesToUser(SelectedRoles, userId);
-
         return Redirect("/Admin/Users");
     }
 }

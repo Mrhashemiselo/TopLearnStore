@@ -1,5 +1,5 @@
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using TopLearn.Core.DTOs.Users;
+using TopLearn.Core.DTOs.AdminPanel;
 using TopLearn.Core.Services.Interfaces;
 
 namespace TopLearn.Web.Pages.Admin.Users;

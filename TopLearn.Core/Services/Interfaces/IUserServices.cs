@@ -10,6 +10,7 @@ public interface IUserServices
     User LoginUser(LoginViewModel login);
     bool ActiveAccount(string activeCode);
     User GetUserByEmail(string email);
+    User GetUserById(int userId);
     User GetUserByActiveCode(string activeCode);
     void UpdateUser(User user);
     User GetUserByUsername(string username);

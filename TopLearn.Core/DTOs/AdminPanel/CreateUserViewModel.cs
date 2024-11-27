@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using System.ComponentModel.DataAnnotations;
 
-namespace TopLearn.Core.DTOs.Users;
+namespace TopLearn.Core.DTOs.AdminPanel;
 public class CreateUserViewModel
 {
     [Display(Name = "نام کاربری")]

@@ -11,11 +11,21 @@ public class PermissionService(TopLearnContext context) : IPermissionService
         {
             context.UserRoles.Add(new UserRole()
             {
-                Id = roleId,
+                RoleId = roleId,
                 UserId = userId
             });
         }
         context.SaveChanges();
+    }
+
+    public void EditRoleUser(int userId, List<int> rolesId)
+    {
+        context.UserRoles
+            .Where(w => w.UserId == userId)
+            .ToList()
+            .ForEach(f => context.UserRoles.Remove(f));
+
+        AddRolesToUser(rolesId, userId);
     }
 
     public List<Role> GetRoles()
