@@ -22,6 +22,9 @@ public class TopLearnContext : DbContext
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
+        modelBuilder.Entity<User>()
+            .HasQueryFilter(u => !u.IsDelete);
+
         base.OnModelCreating(modelBuilder);
         modelBuilder.Seed();
     }

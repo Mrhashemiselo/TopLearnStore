@@ -58,6 +58,9 @@ public class HomeController(IUserPanelServices userPanelServices) : Controller
             return View(model);
         }
 
+        userPanelServices.ChangeUserPassword(currentUsername, model.Password);
+        ViewBag.IsSuccess = true;
+
         return View();
     }
     #endregion

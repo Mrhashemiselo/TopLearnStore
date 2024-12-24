@@ -13,16 +13,19 @@ public class WalletController : Controller
 {
     private readonly IWalletServices _walletServices;
     private readonly IUserServices _userServices;
+    private readonly IHttpContextAccessor _httpContextAccessor;
 
     private readonly IOnlinePayment _onlinePayment;
 
     public WalletController(IWalletServices walletServices,
         IUserServices userServices,
-        IOnlinePayment onlinePayment)
+        IOnlinePayment onlinePayment,
+        IHttpContextAccessor httpContextAccessor)
     {
         _walletServices = walletServices;
         _userServices = userServices;
         _onlinePayment = onlinePayment;
+        _httpContextAccessor = httpContextAccessor;
     }
 
 
@@ -46,7 +49,10 @@ public class WalletController : Controller
         var walletId = _walletServices.ChargeWallet(User.Identity.Name, (int)model.Amount, "شارژ حساب");
 
         #region Parpad payment
-        var callbackUrl = $"https://localhost:7207/onlinePayment/{walletId}";
+        var request = _httpContextAccessor.HttpContext.Request;
+        var baseUrl = $"{request.Scheme}://{request.Host}{request.PathBase}";
+        var callbackUrl = $"{baseUrl}/onlinePayment/{walletId}";
+
         var result = await _onlinePayment.RequestAsync(invoice =>
         {
             invoice.SetZarinPalData("Description")

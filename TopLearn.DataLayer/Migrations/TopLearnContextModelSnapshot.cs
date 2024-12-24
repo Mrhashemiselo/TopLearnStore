@@ -17,7 +17,7 @@ namespace TopLearn.DataLayer.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "8.0.8")
+                .HasAnnotation("ProductVersion", "8.0.10")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
@@ -63,6 +63,9 @@ namespace TopLearn.DataLayer.Migrations
                         .HasColumnType("nvarchar(150)");
 
                     b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("IsDelete")
                         .HasColumnType("bit");
 
                     b.Property<string>("Password")
@@ -140,38 +143,6 @@ namespace TopLearn.DataLayer.Migrations
                     b.HasIndex("WalletTypeId");
 
                     b.ToTable("Wallets");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            Amount = 2000000,
-                            CreateDate = new DateTime(2024, 10, 12, 11, 11, 15, 283, DateTimeKind.Local).AddTicks(8009),
-                            Description = "شارژ حساب",
-                            IsPay = true,
-                            UserId = 12,
-                            WalletTypeId = 1
-                        },
-                        new
-                        {
-                            Id = 2,
-                            Amount = 500000,
-                            CreateDate = new DateTime(2024, 10, 12, 11, 11, 15, 283, DateTimeKind.Local).AddTicks(8020),
-                            Description = "شارژ حساب",
-                            IsPay = true,
-                            UserId = 12,
-                            WalletTypeId = 1
-                        },
-                        new
-                        {
-                            Id = 3,
-                            Amount = 650000,
-                            CreateDate = new DateTime(2024, 10, 12, 11, 11, 15, 283, DateTimeKind.Local).AddTicks(8022),
-                            Description = "خرید دوره",
-                            IsPay = true,
-                            UserId = 12,
-                            WalletTypeId = 2
-                        });
                 });
 
             modelBuilder.Entity("TopLearn.DataLayer.Entities.Wallet.WalletType", b =>

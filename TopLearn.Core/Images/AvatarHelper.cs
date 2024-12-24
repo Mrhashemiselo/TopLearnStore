@@ -2,8 +2,17 @@
 using TopLearn.Core.Generator;
 
 namespace TopLearn.Core.Images;
-public class AvatarHelper
+public static class AvatarHelper
 {
+    public static HashSet<string> imageExtensions = new(StringComparer.OrdinalIgnoreCase)
+    {
+        ".tiff",
+        ".jpg",
+        ".jpeg",
+        ".gif",
+        ".png"
+    };
+
     public static string SaveAvatar(IFormFile userAvatar)
     {
         if (userAvatar == null)
@@ -17,4 +26,11 @@ public class AvatarHelper
         }
         return avatarFileName;
     }
+
+    public static bool IsImage(IFormFile userAvatar)
+    {
+        var extensionFile = (Path.GetExtension(userAvatar.FileName)).ToLower();
+        return imageExtensions.Contains(extensionFile);
+    }
+
 }

@@ -1,4 +1,5 @@
-﻿using TopLearn.Core.DTOs.AdminPanel;
+﻿using Microsoft.EntityFrameworkCore;
+using TopLearn.Core.DTOs.AdminPanel;
 using TopLearn.Core.Generator;
 using TopLearn.Core.Images;
 using TopLearn.Core.Security;
@@ -23,7 +24,7 @@ public class AdminPanel(TopLearnContext context,
         };
 
         #region SaveAvatar
-        if (model.UserAvatar != null)
+        if (model.UserAvatar != null && AvatarHelper.IsImage(model.UserAvatar))
         {
             user.Avatar = AvatarHelper.SaveAvatar(model.UserAvatar);
         }
@@ -39,7 +40,7 @@ public class AdminPanel(TopLearnContext context,
         {
             user.Password = PasswordHelper.EncodingPassword(editUserViewModel.Password);
         }
-        if (editUserViewModel.UserAvatar != null)
+        if (editUserViewModel.UserAvatar != null && AvatarHelper.IsImage(editUserViewModel.UserAvatar))
         {
             if (editUserViewModel.AvatarName != "DefaultAvatar.jpg")
             {
@@ -51,6 +52,33 @@ public class AdminPanel(TopLearnContext context,
         }
         context.Users.Update(user);
         context.SaveChanges();
+    }
+
+    public UserForAdminViewModel GetDeletedUsers(int pageId = 1, string filterEmail = "", string filterUsername = "")
+    {
+        var result = context.Users
+            .AsQueryable()
+            .IgnoreQueryFilters()
+            .Where(w => w.IsDelete);
+
+        if (!string.IsNullOrEmpty(filterEmail))
+            result = result.Where(w => w.Email.Contains(filterEmail));
+        if (!string.IsNullOrEmpty(filterUsername))
+            result = result.Where(a => a.Username.Contains(filterUsername));
+
+        int take = 10;
+        int skip = (pageId - 1) * take;
+
+        return new UserForAdminViewModel()
+        {
+            CurrentPage = pageId,
+            PageCount = result.Count() / take,
+            Users = result
+                          .OrderBy(u => u.RegisterDate)
+                          .Skip(skip)
+                          .Take(take)
+                          .ToList()
+        };
     }
 
     public EditUserViewModel GetUserForShowInEditMode(int userId)

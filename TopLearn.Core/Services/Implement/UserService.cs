@@ -28,6 +28,13 @@ public class UserService(TopLearnContext context) : IUserServices
         return user.Id;
     }
 
+    public void DeleteUser(int userId)
+    {
+        var user = GetUserById(userId);
+        user.IsDelete = true;
+        UpdateUser(user);
+    }
+
     public User GetUserByActiveCode(string activeCode)
     {
         return context.Users.SingleOrDefault(a => a.ActiveCode == activeCode);

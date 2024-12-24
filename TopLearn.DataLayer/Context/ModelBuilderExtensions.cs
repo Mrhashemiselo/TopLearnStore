@@ -11,38 +11,38 @@ public static class ModelBuilderExtensions
             new WalletType() { Id = 2, Title = "برداشت" }
             );
 
-        modelBuilder.Entity<Wallet>().HasData(
-            new Wallet()
-            {
-                Id = 1,
-                WalletTypeId = 1,
-                UserId = 12,
-                Amount = 2000000,
-                Description = "شارژ حساب",
-                IsPay = true,
-                CreateDate = DateTime.Now
-            },
-            new Wallet()
-            {
-                Id = 2,
-                WalletTypeId = 1,
-                UserId = 12,
-                Amount = 500000,
-                Description = "شارژ حساب",
-                IsPay = true,
-                CreateDate = DateTime.Now
-            },
-            new Wallet()
-            {
-                Id = 3,
-                WalletTypeId = 2,
-                UserId = 12,
-                Amount = 650000,
-                Description = "خرید دوره",
-                IsPay = true,
-                CreateDate = DateTime.Now
-            }
-            );
+        //modelBuilder.Entity<Wallet>().HasData(
+        //    new Wallet()
+        //    {
+        //        Id = 1,
+        //        WalletTypeId = 1,
+        //        UserId = 12,
+        //        Amount = 2000000,
+        //        Description = "شارژ حساب",
+        //        IsPay = true,
+        //        CreateDate = DateTime.Now
+        //    },
+        //    new Wallet()
+        //    {
+        //        Id = 2,
+        //        WalletTypeId = 1,
+        //        UserId = 12,
+        //        Amount = 500000,
+        //        Description = "شارژ حساب",
+        //        IsPay = true,
+        //        CreateDate = DateTime.Now
+        //    },
+        //    new Wallet()
+        //    {
+        //        Id = 3,
+        //        WalletTypeId = 2,
+        //        UserId = 12,
+        //        Amount = 650000,
+        //        Description = "خرید دوره",
+        //        IsPay = true,
+        //        CreateDate = DateTime.Now
+        //    }
+        //    );
     }
 
 }

@@ -15,4 +15,5 @@ public interface IUserServices
     void UpdateUser(User user);
     User GetUserByUsername(string username);
     int GetUserIdByUsername(string username);
+    void DeleteUser(int userId);
 }

@@ -1,5 +1,6 @@
 ﻿using TopLearn.Core.DTOs.UserPanel;
 using TopLearn.Core.Generator;
+using TopLearn.Core.Images;
 using TopLearn.Core.Security;
 using TopLearn.Core.Services.Interfaces;
 using TopLearn.DataLayer.Context;
@@ -9,6 +10,13 @@ public class UserPanelServices(IUserServices userService,
     TopLearnContext context,
     IWalletServices walletServices) : IUserPanelServices
 {
+    public void ChangeUserPassword(string username, string newPassword)
+    {
+        var user = userService.GetUserByUsername(username);
+        user.Password = PasswordHelper.EncodingPassword(newPassword);
+        userService.UpdateUser(user);
+    }
+
     public bool CompareOldPassword(string username, string oldPassword)
     {
         var hashedStoredPassword = userService.GetUserByUsername(username).Password;
@@ -17,7 +25,7 @@ public class UserPanelServices(IUserServices userService,
 
     public void EditProfile(string username, EditProfileViewModel model)
     {
-        if (model.UserAvatar != null)
+        if (model.UserAvatar != null && AvatarHelper.IsImage(model.UserAvatar))
         {
             string imagePath = "";
             if (model.AvatarName != "DefaultAvatar.jpg")
@@ -79,5 +87,17 @@ public class UserPanelServices(IUserServices userService,
         information.Wallet = walletServices.BalanceUserWallet(username);
 
         return information;
+    }
+
+    public InformationUserViewModel GetUserInformation(int userId)
+    {
+        var user = userService.GetUserById(userId);
+        return new InformationUserViewModel()
+        {
+            Username = user.Username,
+            Email = user.Email,
+            RegisterDate = user.RegisterDate,
+            Wallet = walletServices.BalanceUserWallet(user.Username)
+        };
     }
 }
