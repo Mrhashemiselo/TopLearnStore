@@ -21,7 +21,11 @@ public class CreateUserViewModel
     [MinLength(8, ErrorMessage = "{0} نباید از {1} حرف کوچکتر باشد")]
     public string Password { get; set; }
 
+    [Display(Name = "تصویر پروفایل")]
+    [Required(ErrorMessage = "{0} نباید خالی باشد")]
     public IFormFile UserAvatar { get; set; }
 
+    [Display(Name = "نقش کاربر")]
+    [Required(ErrorMessage = "لطفا {0} را تعیین کنید")]
     public List<int> SelectedRoles { get; set; }
 }

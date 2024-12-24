@@ -13,6 +13,8 @@ public class AdminPanel(TopLearnContext context,
 {
     public int AddUserFromAdmin(CreateUserViewModel model)
     {
+        if (!AvatarHelper.IsImage(model.UserAvatar))
+            return -1;
         User user = new()
         {
             Password = PasswordHelper.EncodingPassword(model.Password),
@@ -24,7 +26,7 @@ public class AdminPanel(TopLearnContext context,
         };
 
         #region SaveAvatar
-        if (model.UserAvatar != null && AvatarHelper.IsImage(model.UserAvatar))
+        if (model.UserAvatar != null)
         {
             user.Avatar = AvatarHelper.SaveAvatar(model.UserAvatar);
         }

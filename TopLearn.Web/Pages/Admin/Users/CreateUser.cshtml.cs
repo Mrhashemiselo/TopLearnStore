@@ -1,4 +1,4 @@
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using TopLearn.Core.DTOs.AdminPanel;
 using TopLearn.Core.Services.Interfaces;
@@ -16,13 +16,22 @@ public class CreateUserModel(IAdminPanel adminPanel,
         ViewData["Roles"] = permissionService.GetRoles();
     }
 
-    public IActionResult OnPost(List<int> SelectedRoles)
+    public IActionResult OnPost()
     {
         if (!ModelState.IsValid)
+        {
+            ViewData["Roles"] = permissionService.GetRoles();
             return Page();
+        }
 
         int userId = adminPanel.AddUserFromAdmin(CreateUserViewModel);
-        permissionService.AddRolesToUser(SelectedRoles, userId);
+        if (userId == -1)
+        {
+            ModelState.AddModelError("", "لطفا فقط تصویر بارگزاری کنید");
+            ViewData["Roles"] = permissionService.GetRoles();
+            return Page();
+        }
+        permissionService.AddRolesToUser(CreateUserViewModel.SelectedRoles, userId);
         return Redirect("/Admin/Users");
     }
 }
