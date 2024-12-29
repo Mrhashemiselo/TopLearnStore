@@ -61,6 +61,7 @@ builder.Services.AddScoped<IWalletServices, WalletServices>();
 builder.Services.AddScoped<IUserPanelServices, UserPanelServices>();
 builder.Services.AddScoped<IViewRenderService, RenderViewToString>();
 builder.Services.AddScoped<IPermissionService, PermissionService>();
+builder.Services.AddScoped<IRoleServices, RoleServices>();
 builder.Services.AddScoped<IAdminPanel, AdminPanel>();
 #endregion
 

@@ -32,6 +32,7 @@ public class UserService(TopLearnContext context) : IUserServices
     {
         var user = GetUserById(userId);
         user.IsDelete = true;
+        user.IsActive = false;
         UpdateUser(user);
     }
 

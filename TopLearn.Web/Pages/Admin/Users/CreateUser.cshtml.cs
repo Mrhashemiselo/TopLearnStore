@@ -6,21 +6,21 @@ using TopLearn.Core.Services.Interfaces;
 namespace TopLearn.Web.Pages.Admin.Users;
 
 public class CreateUserModel(IAdminPanel adminPanel,
-    IPermissionService permissionService) : PageModel
+    IRoleServices roleServices) : PageModel
 {
     [BindProperty]
     public CreateUserViewModel CreateUserViewModel { get; set; }
 
     public void OnGet()
     {
-        ViewData["Roles"] = permissionService.GetRoles();
+        ViewData["Roles"] = roleServices.GetRoles();
     }
 
     public IActionResult OnPost()
     {
         if (!ModelState.IsValid)
         {
-            ViewData["Roles"] = permissionService.GetRoles();
+            ViewData["Roles"] = roleServices.GetRoles();
             return Page();
         }
 
@@ -28,10 +28,10 @@ public class CreateUserModel(IAdminPanel adminPanel,
         if (userId == -1)
         {
             ModelState.AddModelError("", "لطفا فقط تصویر بارگزاری کنید");
-            ViewData["Roles"] = permissionService.GetRoles();
+            ViewData["Roles"] = roleServices.GetRoles();
             return Page();
         }
-        permissionService.AddRolesToUser(CreateUserViewModel.SelectedRoles, userId);
+        roleServices.AddRolesToUser(CreateUserViewModel.SelectedRoles, userId);
         return Redirect("/Admin/Users");
     }
 }

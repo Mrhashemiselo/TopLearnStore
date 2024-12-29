@@ -1,35 +1,39 @@
 ﻿using TopLearn.Core.Services.Interfaces;
 using TopLearn.DataLayer.Context;
-using TopLearn.DataLayer.Entities.Users;
+using TopLearn.DataLayer.Entities.Permissions;
 
 namespace TopLearn.Core.Services.Implement;
 public class PermissionService(TopLearnContext context) : IPermissionService
 {
-    public void AddRolesToUser(List<int> roleIds, int userId)
+    public List<Permission> GetAllPermission() =>
+        context.Permission.ToList();
+
+    public void AddPermissionsToRole(int roleId, List<int> permissions)
     {
-        foreach (var roleId in roleIds)
+        foreach (var permission in permissions)
         {
-            context.UserRoles.Add(new UserRole()
+            context.RolePermission.Add(new RolePermission()
             {
-                RoleId = roleId,
-                UserId = userId
+                PermissionId = permission,
+                RoleId = roleId
             });
         }
         context.SaveChanges();
     }
 
-    public void EditRoleUser(int userId, List<int> rolesId)
+    public List<int> PermissionsRole(int roleId) =>
+        context.RolePermission
+        .Where(w => w.RoleId == roleId)
+        .Select(s => s.PermissionId)
+        .ToList();
+
+    public void UpdatePermissionsRole(int roleId, List<int> permissions)
     {
-        context.UserRoles
-            .Where(w => w.UserId == userId)
+        context.RolePermission
+            .Where(w => w.RoleId == roleId)
             .ToList()
-            .ForEach(f => context.UserRoles.Remove(f));
+            .ForEach(f => context.RolePermission.Remove(f));
 
-        AddRolesToUser(rolesId, userId);
-    }
-
-    public List<Role> GetRoles()
-    {
-        return context.Roles.ToList();
+        AddPermissionsToRole(roleId, permissions);
     }
 }

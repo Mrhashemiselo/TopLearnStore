@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using TopLearn.DataLayer.Entities.Permissions;
 using TopLearn.DataLayer.Entities.Users;
 using TopLearn.DataLayer.Entities.Wallet;
 
@@ -20,10 +21,17 @@ public class TopLearnContext : DbContext
     public DbSet<Wallet> Wallets { get; set; }
     #endregion
 
+    #region Permission
+    public DbSet<Permission> Permission { get; set; }
+    public DbSet<RolePermission> RolePermission { get; set; }
+    #endregion
+
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.Entity<User>()
             .HasQueryFilter(u => !u.IsDelete);
+        modelBuilder.Entity<Role>()
+            .HasQueryFilter(w => !w.IsDelete);
 
         base.OnModelCreating(modelBuilder);
         modelBuilder.Seed();

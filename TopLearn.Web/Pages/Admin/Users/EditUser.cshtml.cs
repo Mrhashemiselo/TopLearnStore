@@ -6,7 +6,7 @@ using TopLearn.Core.Services.Interfaces;
 namespace TopLearn.Web.Pages.Admin.Users;
 
 public class EditUserModel(IAdminPanel adminPanel,
-    IPermissionService permissionService) : PageModel
+    IRoleServices roleServices) : PageModel
 {
 
     [BindProperty]
@@ -15,7 +15,7 @@ public class EditUserModel(IAdminPanel adminPanel,
     public void OnGet(int id)
     {
         EditUserViewModel = adminPanel.GetUserForShowInEditMode(id);
-        ViewData["Roles"] = permissionService.GetRoles();
+        ViewData["Roles"] = roleServices.GetRoles();
     }
 
     public IActionResult OnPost(List<int> UserRoles)
@@ -24,7 +24,7 @@ public class EditUserModel(IAdminPanel adminPanel,
             return Page();
 
         adminPanel.EditUserFromAdmin(EditUserViewModel);
-        permissionService.EditRoleUser(EditUserViewModel.UserId, UserRoles);
+        roleServices.EditRoleUser(EditUserViewModel.UserId, UserRoles);
         return RedirectToPage("Index");
     }
 }

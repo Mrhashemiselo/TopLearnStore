@@ -1,11 +1,10 @@
-﻿using TopLearn.DataLayer.Entities.Users;
+﻿using TopLearn.DataLayer.Entities.Permissions;
 
 namespace TopLearn.Core.Services.Interfaces;
 public interface IPermissionService
 {
-    #region Roles
-    List<Role> GetRoles();
-    void AddRolesToUser(List<int> roleIds, int userId);
-    void EditRoleUser(int userId, List<int> rolesId);
-    #endregion
+    List<Permission> GetAllPermission();
+    void AddPermissionsToRole(int roleId, List<int> permissions);
+    List<int> PermissionsRole(int roleId);
+    void UpdatePermissionsRole(int roleId, List<int> permissions);
 }
