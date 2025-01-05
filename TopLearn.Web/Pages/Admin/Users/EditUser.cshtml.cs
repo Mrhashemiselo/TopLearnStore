@@ -1,11 +1,13 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using TopLearn.Core.DTOs.AdminPanel;
+using TopLearn.Core.Security;
 using TopLearn.Core.Services.Interfaces;
 
 namespace TopLearn.Web.Pages.Admin.Users;
 
-public class EditUserModel(IAdminPanel adminPanel,
+[PermissionChecker(4)]
+public class EditUserModel(IAdminPanelServices adminPanel,
     IRoleServices roleServices) : PageModel
 {
 

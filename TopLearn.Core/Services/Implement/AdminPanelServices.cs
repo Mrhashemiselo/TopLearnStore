@@ -8,8 +8,8 @@ using TopLearn.DataLayer.Context;
 using TopLearn.DataLayer.Entities.Users;
 
 namespace TopLearn.Core.Services.Implement;
-public class AdminPanel(TopLearnContext context,
-    IUserServices userServices) : IAdminPanel
+public class AdminPanelServices(TopLearnContext context,
+    IUserServices userServices) : IAdminPanelServices
 {
     public int AddUserFromAdmin(CreateUserViewModel model)
     {

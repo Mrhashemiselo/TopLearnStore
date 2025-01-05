@@ -3,7 +3,7 @@ using TopLearn.DataLayer.Context;
 using TopLearn.DataLayer.Entities.Permissions;
 
 namespace TopLearn.Core.Services.Implement;
-public class PermissionService(TopLearnContext context) : IPermissionService
+public class PermissionServices(TopLearnContext context) : IPermissionServices
 {
     public List<Permission> GetAllPermission() =>
         context.Permission.ToList();
@@ -35,5 +35,26 @@ public class PermissionService(TopLearnContext context) : IPermissionService
             .ForEach(f => context.RolePermission.Remove(f));
 
         AddPermissionsToRole(roleId, permissions);
+    }
+
+    public bool CheckPermission(int permissionId, string username)
+    {
+        var userId = context.Users
+            .First(f => f.Username == username).Id;
+        var userRoles = context.UserRoles
+            .Where(a => a.UserId == userId)
+            .Select(s => s.RoleId)
+            .ToList();
+
+        if (!userRoles.Any())
+            return false;
+
+        var rolesPermission = context.RolePermission
+            .Where(w => w.PermissionId == permissionId)
+            .Select(s => s.RoleId)
+            .ToList();
+
+        return rolesPermission
+            .Any(w => userRoles.Contains(w));
     }
 }

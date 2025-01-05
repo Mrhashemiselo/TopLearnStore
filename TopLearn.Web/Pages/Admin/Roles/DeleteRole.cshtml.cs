@@ -1,10 +1,12 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using TopLearn.Core.Security;
 using TopLearn.Core.Services.Interfaces;
 using TopLearn.DataLayer.Entities.Users;
 
 namespace TopLearn.Web.Pages.Admin.Roles;
 
+[PermissionChecker(9)]
 public class DeleteRoleModel(IRoleServices roleServices) : PageModel
 {
     [BindProperty]

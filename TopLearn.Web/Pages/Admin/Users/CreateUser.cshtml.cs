@@ -1,11 +1,13 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using TopLearn.Core.DTOs.AdminPanel;
+using TopLearn.Core.Security;
 using TopLearn.Core.Services.Interfaces;
 
 namespace TopLearn.Web.Pages.Admin.Users;
 
-public class CreateUserModel(IAdminPanel adminPanel,
+[PermissionChecker(3)]
+public class CreateUserModel(IAdminPanelServices adminPanel,
     IRoleServices roleServices) : PageModel
 {
     [BindProperty]

@@ -1,7 +1,7 @@
 ﻿using TopLearn.Core.DTOs.AdminPanel;
 
 namespace TopLearn.Core.Services.Interfaces;
-public interface IAdminPanel
+public interface IAdminPanelServices
 {
     UserForAdminViewModel GetUsers(int pageId = 1, string filterEmail = "", string filterUsername = "");
     UserForAdminViewModel GetDeletedUsers(int pageId = 1, string filterEmail = "", string filterUsername = "");

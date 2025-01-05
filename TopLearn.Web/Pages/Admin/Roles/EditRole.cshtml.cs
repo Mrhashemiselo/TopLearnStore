@@ -1,11 +1,13 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using TopLearn.Core.Security;
 using TopLearn.Core.Services.Interfaces;
 using TopLearn.DataLayer.Entities.Users;
 
 namespace TopLearn.Web.Pages.Admin.Roles;
 
-public class EditRoleModel(IPermissionService permissionService, IRoleServices roleServices) : PageModel
+[PermissionChecker(8)]
+public class EditRoleModel(IPermissionServices permissionService, IRoleServices roleServices) : PageModel
 {
     [BindProperty]
     public Role Role { get; set; }

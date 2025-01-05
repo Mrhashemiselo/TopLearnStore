@@ -1,10 +1,12 @@
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using TopLearn.Core.DTOs.AdminPanel;
+using TopLearn.Core.Security;
 using TopLearn.Core.Services.Interfaces;
 
 namespace TopLearn.Web.Pages.Admin.Users;
 
-public class DeletedUsersModel(IAdminPanel adminPanel) : PageModel
+[PermissionChecker(5)]
+public class DeletedUsersModel(IAdminPanelServices adminPanel) : PageModel
 {
     public UserForAdminViewModel UserForAdminViewModel { get; set; }
 

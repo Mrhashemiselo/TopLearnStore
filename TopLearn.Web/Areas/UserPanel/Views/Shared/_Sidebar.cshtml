@@ -2,7 +2,7 @@
 @using TopLearn.Core.DTOs.UserPanel
 @using TopLearn.Core.Services.Interfaces
 @inject IUserPanelServices _UserPanelService
-@* @inject IPermissionService _permissionService *@
+@inject IPermissionServices _permissionService
 
 @{
     SidebarViewModel user = _UserPanelService.GetSidebarUserPanelData(User.Identity.Name);
@@ -37,7 +37,7 @@
             </div>
         </section>
 
-       @*  @if (_permissionService.CheckPermission(10, User.Identity.Name))
+      @*  @if (_permissionService.CheckPermission(10, User.Identity.Name))
         {
             <section>
                 <header><h3> پنل مدرس </h3></header>

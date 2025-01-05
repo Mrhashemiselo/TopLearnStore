@@ -1,11 +1,13 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using TopLearn.Core.Security;
 using TopLearn.Core.Services.Interfaces;
 using TopLearn.DataLayer.Entities.Users;
 
 namespace TopLearn.Web.Pages.Admin.Roles;
 
-public class CreateRoleModel(IPermissionService permissionService,
+[PermissionChecker(7)]
+public class CreateRoleModel(IPermissionServices permissionService,
     IRoleServices roleServices) : PageModel
 {
     [BindProperty]

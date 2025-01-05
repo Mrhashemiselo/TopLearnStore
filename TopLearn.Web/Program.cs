@@ -56,13 +56,14 @@ option.UseSqlServer(builder.Configuration.GetConnectionString("TopLearnSql")));
 #endregion
 
 #region IoC
-builder.Services.AddScoped<IUserServices, UserService>();
+builder.Services.AddScoped<IUserServices, UserServices>();
 builder.Services.AddScoped<IWalletServices, WalletServices>();
 builder.Services.AddScoped<IUserPanelServices, UserPanelServices>();
 builder.Services.AddScoped<IViewRenderService, RenderViewToString>();
-builder.Services.AddScoped<IPermissionService, PermissionService>();
+builder.Services.AddScoped<IPermissionServices, PermissionServices>();
 builder.Services.AddScoped<IRoleServices, RoleServices>();
-builder.Services.AddScoped<IAdminPanel, AdminPanel>();
+builder.Services.AddScoped<IAdminPanelServices, AdminPanelServices>();
+builder.Services.AddScoped<ICourseServices, CourseServices>();
 #endregion
 
 var app = builder.Build();

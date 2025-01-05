@@ -7,7 +7,7 @@ using TopLearn.DataLayer.Context;
 using TopLearn.DataLayer.Entities.Users;
 
 namespace TopLearn.Core.Services.Implement;
-public class UserService(TopLearnContext context) : IUserServices
+public class UserServices(TopLearnContext context) : IUserServices
 {
     public bool ActiveAccount(string activeCode)
     {

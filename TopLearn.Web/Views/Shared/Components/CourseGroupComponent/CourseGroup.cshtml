@@ -1,0 +1,27 @@
+﻿@using TopLearn.DataLayer.Entities.Course
+@model IEnumerable<CourseGroup>
+
+<div class="main-menu">
+    <div class="container">
+        <nav>
+            <span class="responsive-sign"><i class="zmdi zmdi-menu"></i></span>
+            <ul>
+              @foreach (var group in Model.Where(w=>w.ParentId==null))
+                {
+                    <li>
+                        <a href="#">@group.Title</a>
+                        @if(Model.Any(a=> a.ParentId == group.Id))
+                        {
+                            <ul>
+                                @foreach (var sub in Model.Where(a=>a.ParentId==group.Id))
+                                {
+                                    <li><a href="#">@sub.Title</a></li>
+                                }
+                            </ul>
+                        }
+                    </li>
+                }
+            </ul>
+        </nav>
+    </div>
+</div>

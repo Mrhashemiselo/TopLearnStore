@@ -10,7 +10,6 @@
     <None Include="Views\Home\Index.cshtml" />
     <None Include="Views\Shared\_DefaultLayout.cshtml" />
     <None Include="Views\Shared\_Footer.cshtml" />
-    <None Include="Views\Shared\_MainMenu.cshtml" />
     <None Include="Views\Shared\_MetaTags.cshtml" />
     <None Include="Views\Shared\_Styles.cshtml" />
     <None Include="wwwroot\css\fonts\Material-Design-Iconic-Font.svg" />
