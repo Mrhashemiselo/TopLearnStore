@@ -29,6 +29,8 @@ public class TopLearnContext : DbContext
 
     #region Course
     public DbSet<CourseGroup> CourseGroups { get; set; }
+    public DbSet<Course> Courses { get; set; }
+    public DbSet<CourseEpisode> CourseEpisodes { get; set; }
     #endregion
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)

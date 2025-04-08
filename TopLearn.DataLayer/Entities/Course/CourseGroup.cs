@@ -18,6 +18,16 @@ public class CourseGroup
     [Display(Name = "گروه اصلی")]
     public int? ParentId { get; set; }
 
+    #region Relations
+
     [ForeignKey("ParentId")]
     public List<CourseGroup> CourseGroups { get; set; }
+
+    [InverseProperty("CourseGroup")]
+    public List<Course> Courses { get; set; }
+
+    [InverseProperty("SubGroup")]
+    public List<Course> SubCourses { get; set; }
+
+    #endregion
 }
