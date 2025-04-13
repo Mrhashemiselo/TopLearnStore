@@ -16,13 +16,13 @@ public class CourseEpisode
     public TimeSpan Time { get; set; }
 
     [Display(Name = "فایل")]
-    public string FileName { get; set; }
+    public string? FileName { get; set; }
 
     [Display(Name = "رایگان")]
     public bool IsFree { get; set; }
 
-    #region
+    #region relations
     public int CourseId { get; set; }
-    public Course Course { get; set; }
+    public Course? Course { get; set; }
     #endregion
 }

@@ -53,6 +53,7 @@
     <Folder Include="wwwroot\courseFiles\" />
     <Folder Include="wwwroot\courseOnline\" />
     <Folder Include="wwwroot\course\demoes\" />
+    <Folder Include="wwwroot\MyImages\" />
     <Folder Include="wwwroot\pics\" />
   </ItemGroup>
 

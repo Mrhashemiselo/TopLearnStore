@@ -90,5 +90,64 @@ public class CourseServices(TopLearnContext context) : ICourseServices
                    Title = s.Title,
                    EpisodeCount = s.CourseEpisodes.Count
                }).ToList();
+
+    public Course GetCourseById(int courseId) =>
+        context.Courses.Find(courseId);
+
+    public void UpdateCourse(Course course, IFormFile imgCourse, IFormFile courseDemo)
+    {
+        course.UpdateDate = DateTime.Now;
+
+        if (imgCourse != null && imgCourse.IsImage())
+        {
+            if (course.ImageName != "no-photo.jpg")
+            {
+                string deleteimagePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/course/image", course.ImageName);
+                if (File.Exists(deleteimagePath))
+                {
+                    File.Delete(deleteimagePath);
+                }
+
+                string deletethumbPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/course/thumb", course.ImageName);
+                if (File.Exists(deletethumbPath))
+                {
+                    File.Delete(deletethumbPath);
+                }
+            }
+            course.ImageName = GuidGenerator.GenerateUniqueId() + Path.GetExtension(imgCourse.FileName);
+            string imagePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/course/image", course.ImageName);
+
+            using (var stream = new FileStream(imagePath, FileMode.Create))
+            {
+                imgCourse.CopyTo(stream);
+            }
+
+            ImageConvertor imgResizer = new ImageConvertor();
+            string thumbPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/course/thumb", course.ImageName);
+
+            imgResizer.Image_resize(imagePath, thumbPath, 250);
+        }
+
+        if (courseDemo != null)
+        {
+            if (course.DemoFileName != null)
+            {
+                string deleteDemoPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/course/demoes", course.DemoFileName);
+                if (File.Exists(deleteDemoPath))
+                {
+                    File.Delete(deleteDemoPath);
+                }
+            }
+            course.DemoFileName = GuidGenerator.GenerateUniqueId() + Path.GetExtension(courseDemo.FileName);
+            string demoPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/course/demoes", course.DemoFileName);
+            using (var stream = new FileStream(demoPath, FileMode.Create))
+            {
+                courseDemo.CopyTo(stream);
+            }
+        }
+
+        context.Courses.Update(course);
+        context.SaveChanges();
+    }
     #endregion
 }

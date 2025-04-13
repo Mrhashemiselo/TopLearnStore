@@ -1,11 +1,16 @@
-﻿@page
-@model TopLearn.Web.Pages.Admin.Courses.CreateCourseModel
+﻿@page "{id}"
+@model TopLearn.Web.Pages.Admin.Courses.EditCourseModel
+
 @{
-    ViewData["Title"] = "افزودن دوره جدید";
+    ViewData["Title"] = "ویرایش دوره";
 }
 
 <div class="row">
     <form method="post" enctype="multipart/form-data">
+        <input type="hidden" asp-for="Course.CreateDate" />
+        <input type="hidden" asp-for="Course.Id" />
+        <input type="hidden" asp-for="Course.ImageName" />
+        <input type="hidden" asp-for="Course.DemoFileName" />
         <div class="col-md-8">
             <h2>اطلاعات دوره</h2>
             <hr />
@@ -20,9 +25,9 @@
                 <span asp-validation-for="Course.GroupId"></span>
             </div>
             <div class="form-group">
-                <label>زیر گروه</label>
-                <select class="form-control" asp-for="Course.SubGroupId" asp-items="@(ViewData["SubGroups"] as SelectList)"></select>
-                <span asp-validation-for="Course.SubGroupId"></span>
+                <label>گروه فرعی</label>
+                <select class="form-control" asp-for="Course.SubGroup" asp-items="@(ViewData["SubGroups"] as SelectList)"></select>
+                <span asp-validation-for="Course.SubGroup"></span>
             </div>
             <div class="form-group">
                 <label>مدرس دوره</label>
@@ -36,29 +41,29 @@
             </div>
             <div class="form-group">
                 <label>قیمت دوره</label>
-                <input type="number" asp-for="Course.Price" value="0" class="form-control" />
-                <span asp-validation-for="Course.Description"></span>
+                <input type="number" asp-for="Course.Price" class="form-control" />
+                <span asp-validation-for="Course.Price"></span>
             </div>
             <div class="form-group">
                 <label>فایل دمو دوره</label>
-                <input type="file" name="demoFile">
-                <span asp-validation-for="Course.Title"></span>
+                <input type="file" name="demoUp">
+                <span asp-validation-for="Course.ImageName"></span>
             </div>
             <div class="form-group">
                 <label>کلمات کلیدی دوره</label>
                 <input type="text" asp-for="Course.Tags" class="form-control">
                 <p class="help-block">کلمات را با - جدا کنید</p>
-                <span asp-validation-for="Course.Title"></span>
+                <span asp-validation-for="Course.Tags"></span>
             </div>
             <input type="submit" value="ذخیره اطلاعات" class="btn btn-success" />
         </div>
         <div class="col-md-4">
             <p></p>
-            <img id="imgCourse" class="thumbnail" style="width:30%; height: 30%;" src="/UserAvatar/DefaultAvatar.jpg" />
+            <img id="imgCourse" class="thumbnail" src="/course/image/@Model.Course.ImageName" />
             <div class="form-group">
 
                 <label>انتخاب تصویر</label>
-                <input type="file" name="imgCourse" id="imgCourseUp">
+                <input type="file" name="imgCourseUp" id="imgCourseUp">
             </div>
             <div class="form-group">
                 <label>سطح دوره</label>
@@ -78,13 +83,13 @@
 {
     <script>
         $("#Course_GroupId").change(function() {
-            $("#Course_SubGroupId").empty();
+            $("#Course_SubGroup").empty();
             $.getJSON("/home/GetSubGroups/" + $("#Course_GroupId :selected").val(),
                 function(data) {
 
                     $.each(data,
                         function() {
-                            $("#Course_SubGroupId").append('<option value=' + this.value + '>' + this.text + '</option>');
+                            $("#Course_SubGroup").append('<option value=' + this.value + '>' + this.text + '</option>');
 
                         });
 
@@ -120,3 +125,5 @@
 
     </script>
 }
+
+

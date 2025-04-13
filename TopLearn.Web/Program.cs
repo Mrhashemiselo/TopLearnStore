@@ -64,6 +64,7 @@ builder.Services.AddScoped<IPermissionServices, PermissionServices>();
 builder.Services.AddScoped<IRoleServices, RoleServices>();
 builder.Services.AddScoped<IAdminPanelServices, AdminPanelServices>();
 builder.Services.AddScoped<ICourseServices, CourseServices>();
+builder.Services.AddScoped<IEpisodeServices, EpisodeServices>();
 #endregion
 
 var app = builder.Build();

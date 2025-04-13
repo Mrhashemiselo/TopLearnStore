@@ -17,5 +17,7 @@ public interface ICourseServices
     #region Course
     List<ShowCourseForAdminViewModel> GetCoursesForAdmin();
     int AddCourse(Course course, IFormFile image, IFormFile demo);
+    Course GetCourseById(int courseId);
+    void UpdateCourse(Course course, IFormFile image, IFormFile demo);
     #endregion
 }
